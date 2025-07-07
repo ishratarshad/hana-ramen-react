@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from "react-router-dom";
 import '../App.css';
 
 function Cart({ cart, setCart }) {
@@ -57,7 +58,7 @@ function Cart({ cart, setCart }) {
     {/* Main content */} 
     <main id="main-content" className="cart-page">
       <div className="top-menu-link">
-        <a href="/menu" className="back-to-menu text-rose-700 underline">← Back to Menu</a>
+        <Link to="/menu" className="back-to-menu">← Back to Menu</Link>
       </div>
       <h1 className="text-3xl font-bold my-4">Your Cart</h1>
 
