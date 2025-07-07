@@ -1,26 +1,34 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import "../App.css";
 
 const Contact = () => {
-useEffect(() => {
-  const hamburger = document.getElementById("hamburger");
-  const navMenu = document.querySelector("nav ul");
+  const [sent, setSent] = useState(false);
 
-  const toggleMenu = () => {
-    navMenu.classList.toggle("show");
-  };
+  useEffect(() => {
+    const hamburger = document.getElementById("hamburger");
+    const navMenu = document.querySelector("nav ul");
 
-  if (hamburger && navMenu) {
-    hamburger.addEventListener("click", toggleMenu);
-  }
+    const toggleMenu = () => {
+      navMenu.classList.toggle("show");
+    };
 
-  return () => {
     if (hamburger && navMenu) {
-      hamburger.removeEventListener("click", toggleMenu);
+      hamburger.addEventListener("click", toggleMenu);
     }
+
+    return () => {
+      if (hamburger && navMenu) {
+        hamburger.removeEventListener("click", toggleMenu);
+      }
+    };
+  }, []);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setSent(true);
+    e.target.reset();
   };
-}, []);
 
   return (
     <>
@@ -35,7 +43,7 @@ useEffect(() => {
 
           <div className="contact-wrapper">
             <div className="contact-form">
-              <form>
+              <form onSubmit={handleSubmit}>
                 <label htmlFor="name">Name</label>
                 <input type="text" id="name" name="name" required />
 
@@ -47,6 +55,11 @@ useEffect(() => {
 
                 <button type="submit">Send Message</button>
               </form>
+              {sent && (
+                <p className="success-msg" style={{ color: "#d81b60", marginTop: "1rem" }}>
+                  Thank you! Your message has been sent.
+                </p>
+              )}
             </div>
 
             <div className="contact-map">
