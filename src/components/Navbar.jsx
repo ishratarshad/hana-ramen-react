@@ -25,17 +25,14 @@ const Navbar = ({ cartCount }) => {
         <ul className={`nav-links ${showMenu ? "show" : ""}`}>
           <li><Link to="/" onClick={handleLinkClick}>Home</Link></li>
           <li><Link to="/menu" onClick={handleLinkClick}>Menu</Link></li>
-          {location.pathname === "/menu" && (
-            <li>
-              <Link to="/cart" className="cart-link" onClick={handleLinkClick}>
-                Cart <span id="cart-count">{cartCount}</span>
-              </Link>
-            </li>
-          )}
           <li><Link to="/about" onClick={handleLinkClick}>About</Link></li>
           <li><Link to="/contact" onClick={handleLinkClick}>Contact</Link></li>
           <li><Link to="/gallery" onClick={handleLinkClick}>Gallery</Link></li>
         </ul>
+        {/* Cart link always visible, outside the hamburger menu */}
+        <Link to="/cart" className="cart-link">
+          🛒 <span id="cart-count">{cartCount}</span>
+        </Link>
       </nav>
     </header>
   );
