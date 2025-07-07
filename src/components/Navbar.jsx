@@ -1,50 +1,40 @@
-import React, { useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import '../App.css';
+import React, { useState } from "react";
+import { Link, useLocation } from "react-router-dom";
+import "../App.css";
 
 const Navbar = ({ cartCount }) => {
   const location = useLocation();
+  const [showMenu, setShowMenu] = useState(false);
 
-  useEffect(() => {
-    const hamburger = document.getElementById("hamburger");
-    const navMenu = document.querySelector(".nav-links");
-
-    const toggleMenu = () => {
-      navMenu.classList.toggle("show");
-    };
-
-    if (hamburger && navMenu) {
-      hamburger.addEventListener("click", toggleMenu);
-    }
-
-    return () => {
-      if (hamburger && navMenu) {
-        hamburger.removeEventListener("click", toggleMenu);
-      }
-    };
-  }, []);
+  // Close menu when a link is clicked
+  const handleLinkClick = () => setShowMenu(false);
 
   return (
     <header>
       <div className="logo">🍜 Hana Ramen</div>
-      <div className="hamburger" id="hamburger">&#9776;</div>
+      <div
+        className="hamburger"
+        onClick={() => setShowMenu((prev) => !prev)}
+        aria-label="Toggle menu"
+        tabIndex={0}
+        role="button"
+      >
+        &#9776;
+      </div>
       <nav>
-        <ul className="nav-links">
-          <li><Link to="/">Home</Link></li>
-          <li><Link to="/menu">Menu</Link></li>
-
-          {/* ✅ Show Cart only on /menu */}
+        <ul className={`nav-links ${showMenu ? "show" : ""}`}>
+          <li><Link to="/" onClick={handleLinkClick}>Home</Link></li>
+          <li><Link to="/menu" onClick={handleLinkClick}>Menu</Link></li>
           {location.pathname === "/menu" && (
             <li>
-              <Link to="/cart" className="cart-link">
+              <Link to="/cart" className="cart-link" onClick={handleLinkClick}>
                 Cart <span id="cart-count">{cartCount}</span>
               </Link>
             </li>
           )}
-
-          <li><Link to="/about">About</Link></li>
-          <li><Link to="/contact">Contact</Link></li>
-          <li><Link to="/gallery">Gallery</Link></li>
+          <li><Link to="/about" onClick={handleLinkClick}>About</Link></li>
+          <li><Link to="/contact" onClick={handleLinkClick}>Contact</Link></li>
+          <li><Link to="/gallery" onClick={handleLinkClick}>Gallery</Link></li>
         </ul>
       </nav>
     </header>
