@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import '../App.css'; 
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination } from 'swiper/modules';
@@ -6,60 +6,43 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 
-const Gallery = () => {
-useEffect(() => {
-  const hamburger = document.getElementById("hamburger");
-  const navMenu = document.querySelector("nav ul");
+const images = [
+  "/images/gallery1.jpg",
+  "/images/gallery2.jpg",
+  "/images/gallery3.jpg",
+  "/images/gallery4.jpg",
+  "/images/gallery5.jpg",
+  "/images/gallery6.jpg"
+];
 
-  const toggleMenu = () => {
-    navMenu.classList.toggle("show");
-  };
-
-  if (hamburger && navMenu) {
-    hamburger.addEventListener("click", toggleMenu);
-  }
-
-  return () => {
-    if (hamburger && navMenu) {
-      hamburger.removeEventListener("click", toggleMenu);
-    }
-  };
-}, []);
-
-  return (
-    <>
-      <a href="#main-content" className="skip-link">Skip to Main Content</a>
-
-
-      <main id="main-content">
-        <section className="gallery">
-          <h1>Gallery</h1>
-          <p>Take a look inside Hana Ramen — from our signature dishes to our cozy interior.</p>
-
+const Gallery = () => (
+  <>
+    <a href="#main-content" className="skip-link">Skip to Main Content</a>
+    <main id="main-content">
+      <section className="gallery">
+        <h1>Gallery</h1>
+        <p>Take a look inside Hana Ramen — from our signature dishes to our cozy interior.</p>
+        <div className="gallery-swiper">
           <Swiper
-            className="mySwiper"
             modules={[Navigation, Pagination]}
             navigation
             pagination={{ clickable: true }}
             spaceBetween={30}
+            slidesPerView={1}
             loop={true}
-            breakpoints={{
-              640: { slidesPerView: 1 },
-              768: { slidesPerView: 2 },
-              1024: { slidesPerView: 3 },
-            }}
+            style={{ width: "100%", maxWidth: 700 }}
           >
-            <SwiperSlide><img src="/images/gallery1.jpg" alt="Ramen Bowl" /></SwiperSlide>
-            <SwiperSlide><img src="/images/gallery2.jpg" alt="Sushi Platter" /></SwiperSlide>
-            <SwiperSlide><img src="/images/gallery3.jpg" alt="Dining Interior" /></SwiperSlide>
-            <SwiperSlide><img src="/images/gallery4.jpg" alt="Chef at Work" /></SwiperSlide>
-            <SwiperSlide><img src="/images/gallery5.jpg" alt="Mochi Dessert" /></SwiperSlide>
-            <SwiperSlide><img src="/images/gallery6.jpg" alt="Lighting and Tables" /></SwiperSlide>
+            {images.map((src, idx) => (
+              <SwiperSlide key={idx}>
+                <img src={src} alt={`Gallery ${idx + 1}`} />
+              </SwiperSlide>
+            ))}
           </Swiper>
-        </section>
-      </main>
+        </div>
+      </section>
+    </main>
 
-      <footer>
+    <footer>
         <div className="footer-content">
           <div className="social-links">
             <a href="https://www.instagram.com/" target="_blank" rel="noreferrer" aria-label="Instagram">Instagram</a> |
@@ -74,8 +57,7 @@ useEffect(() => {
           <p>© 2025 Hana Ramen</p>
         </div>
       </footer>
-    </>
-  );
-};
+  </>
+);
 
 export default Gallery;
